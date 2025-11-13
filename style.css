@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background: linear-gradient(180deg,#241a14 0%, #0f0b08 100%);
+  font-family:'Russo One',sans-serif;
+  color:#f5e0b3;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+  padding:12px;
+}
+
+.painel{
+  width:360px;
+  max-width:95%;
+  padding:16px;
+  border-radius:16px;
+  background:
+    linear-gradient(180deg, rgba(50,40,32,0.95), rgba(20,14,10,0.9));
+  border:4px solid #6b4a2a;
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.6),
+    inset 0 4px 18px rgba(255,180,90,0.03);
+  text-align:center;
+}
+
+h1{color:#ffb84d;font-size:1.2rem;text-shadow:0 0 8px #ff7f2a;margin-bottom:6px}
+h2{color:#ffdca6;font-size:0.82rem;margin-bottom:14px}
+
+.tela{
+  background:linear-gradient(180deg,#221b16,#100a07);
+  border:2px solid #503820;
+  padding:10px;
+  border-radius:10px;
+  position:relative;
+  margin-bottom:14px;
+  overflow:hidden;
+}
+
+.tela.flash{ box-shadow:0 0 20px rgba(255,150,50,0.25) }
+
+.status{font-size:0.9rem;margin-top:10px;color:#e8d3b2}
+.status span{color:#ffb84d}
+
+
+.bola-wrap{ height:80px; display:flex; align-items:center; justify-content:center; }
+.baloon{
+  width:64px;height:84px;border-radius:50% 50% 50% 50%;
+  background: radial-gradient(circle at 30% 30%, #ff7f7f, #b03030 60%);
+  position:relative;
+  box-shadow: inset -8px -8px 18px rgba(0,0,0,0.35), 0 8px 12px rgba(0,0,0,0.4);
+  transition: transform 0.15s ease, opacity 0.2s ease;
+}
+.baloon .shine{
+  position:absolute; top:12px; left:12px; width:22px;height:20px;
+  background:rgba(255,255,255,0.28); border-radius:50%;
+  transform:rotate(-25deg);
+}
+
+
+.baloon.pop{
+  transform: scale(1.6) rotate(-10deg);
+  opacity: 0;
+  transition: transform 0.45s cubic-bezier(.2,.9,.2,1), opacity 0.25s ease;
+}
+
+
+.controle{ display:flex; flex-direction:column; align-items:center; gap:12px; margin-bottom:12px; }
+.linha-meio{ display:flex; gap:12px; align-items:center; }
+
+.botao{
+  width:88px;height:88px;border-radius:12px;border:3px solid #5a412d;
+  background:linear-gradient(145deg,#5a402b,#2a1f15);
+  color:#ffe9c7;font-size:2rem;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 0 #1a1208, 0 0 14px rgba(0,0,0,0.6);
+  cursor:pointer; touch-action: manipulation;
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+
+.botao:active{ transform: translateY(4px); box-shadow:0 2px 0 #120d07; }
+
+.frente{ border-color:#7fff7f; box-shadow:0 8px 18px #7fff7f33; }
+.re{ border-color:#ff5c5c; box-shadow:0 8px 18px #ff5c5c33; }
+.esquerda{ border-color:#ffaa00; box-shadow:0 8px 18px #ffb34733; }
+.direita{ border-color:#66ccff; box-shadow:0 8px 18px #66ccff33; }
+.parar{ border-color:#ffdd55; background:linear-gradient(180deg,#6b5326,#3d2f18); box-shadow:0 8px 20px #ffdd5577; }
+
+.danger-zone{ margin-top:8px; display:flex; justify-content:center; }
+.estourar{
+  width:100%;
+  max-width:260px;
+  padding:12px 14px;
+  font-size:1.1rem;
+  border-radius:12px;
+  border:3px solid #7a1f12;
+  background: linear-gradient(180deg,#8b2a20,#4b130a);
+  color:#fff3e6;
+  box-shadow:0 10px 0 #2d0b06, 0 0 30px rgba(255,60,20,0.15);
+  cursor:pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.estourar:active{ transform: translateY(3px); box-shadow:0 6px 0 #2d0b06; }
+
+footer{ margin-top:14px; font-size:0.78rem; color:#d2b48c; opacity:0.9 }

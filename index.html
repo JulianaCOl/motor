@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tow Mater Battle — Estourar Balão</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="painel">
+    <h1>⚙️ Tow Mater Battle Mode ⚙️</h1>
+   
+
+    <div class="tela">
+      <div class="bola-wrap">
+        <div id="baloon" class="baloon">
+          <span class="shine"></span>
+        </div>
+      </div>
+      <p class="status">Status: <span id="acao">Aguardando comando...</span></p>
+    </div>
+
+    <div class="controle">
+      <button class="botao frente" onclick="enviarComando('/frente','Avançando')">⬆</button>
+
+      <div class="linha-meio">
+        <button class="botao esquerda" onclick="enviarComando('/esquerda','Virando esquerda')">⬅</button>
+        <button class="botao parar" onclick="enviarComando('/parar','Parado')">⏹</button>
+        <button class="botao direita" onclick="enviarComando('/direita','Virando direita')">➡</button>
+      </div>
+
+      <button class="botao re" onclick="enviarComando('/re','Ré')">⬇</button>
+    </div>
+
+    <div class="danger-zone">
+      <button id="estourarBtn" class="estourar" onclick="confirmEstourar()">💥 ESTOURAR BALÃO</button>
+    </div>
+
+    <footer>🛠️ Tow Mater • ESP32 Wi-Fi Control 🛠️</footer>
+  </div>
+
+<script>
+  
+  function enviarComando(url, texto) {
+    document.getElementById('acao').textContent = texto;
+    fetch(url).catch((e)=>console.warn('fetch erro', e));
+    flashIndicator();
+  }
+
+  function flashIndicator() {
+    const tela = document.querySelector('.tela');
+    tela.classList.add('flash');
+    setTimeout(()=>tela.classList.remove('flash'), 400);
+  }
+
+  function confirmEstourar() {
+    if (!confirm('Tem certeza? Isso fará o balão estourar!')) return;
+    estourar();
+  }
+
+  
+  function estourar() {
+    document.getElementById('acao').textContent = 'Estourando balão...';
+    
+    const baloon = document.getElementById('baloon');
+    baloon.classList.add('pop');
+    
+    fetch('/estourar', { method: 'POST' })
+      .then(resp => {
+        
+      })
+      .catch(err => console.warn('Erro estourar:', err));
+    
+    setTimeout(() => {
+      baloon.classList.remove('pop');
+      
+      setTimeout(()=>document.getElementById('acao').textContent = 'Aguardando comando...', 1500);
+    }, 700);
+  }
+</script>
+</body>
+</html>
