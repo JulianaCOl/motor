@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tow Mater Battle Mode</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: radial-gradient(circle at center, #3b2416, #1a0d07);
+      font-family: 'Russo One', sans-serif;
+      color: #f5e0b3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .painel {
+      background: linear-gradient(145deg, #4b2e1e, #2b1a12);
+      border: 5px solid #7b4a26;
+      border-radius: 20px;
+      padding: 25px;
+      width: 360px;
+      max-width: 95%;
+      text-align: center;
+      box-shadow:
+        0 0 25px rgba(0, 0, 0, 0.8),
+        inset 0 0 25px rgba(255, 180, 80, 0.1);
+      position: relative;
+    }
+    .painel::before {
+      content: "";
+      position: absolute;
+      top: -15px; left: -15px; right: -15px; bottom: -15px;
+      border-radius: 25px;
+      border: 5px dashed rgba(100, 60, 30, 0.4);
+      pointer-events: none;
+    }
+    header h1 {
+      color: #ffb84d;
+      text-shadow: 0 0 12px #ff8000;
+      font-size: 1.3rem;
+    }
+    header p {
+      color: #ffddaa;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .controle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+    .linha-meio {
+      display: flex;
+      gap: 15px;
+    }
+    .botao {
+      width: 90px; height: 90px;
+      background: linear-gradient(145deg, #5a3c2b, #2b1b10);
+      border: 3px solid #f4d2a1;
+      color: #ffe8c0;
+      font-size: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 0 #1a100a, 0 0 15px rgba(0, 0, 0, 0.7);
+      transition: all 0.1s ease-in-out;
+    }
+    .botao:active {
+      transform: translateY(4px);
+      box-shadow: 0 3px 0 #1a100a;
+    }
+
+    .frente { border-color: #7fff7f; }
+    .re { border-color: #ff4c4c; }
+    .esquerda { border-color: #ffaa00; }
+    .direita { border-color: #66ccff; }
+    .parar { border-color: #ffdd55; }
+
+    footer {
+      margin-top: 25px;
+      font-size: 0.8rem;
+      color: #e8d3b2;
+      text-shadow: 0 0 5px #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="painel">
+    <header>
+      <h1>⚙️ Tow Mater Battle Mode ⚙️</h1>
+      <p>“Git-r-done!” — Controle seu carro de batalha</p>
+    </header>
+
+    <div class="controle">
+      <button class="botao frente" onclick="enviar('/frente')">⬆</button>
+
+      <div class="linha-meio">
+        <button class="botao esquerda" onclick="enviar('/esquerda')">⬅</button>
+        <button class="botao parar" onclick="enviar('/parar')">⏹</button>
+        <button class="botao direita" onclick="enviar('/direita')">➡</button>
+      </div>
+
+      <button class="botao re" onclick="enviar('/re')">⬇</button>
+    </div>
+
+    <footer>
+      <p>Tow Mater Battle • Powered by ESP32</p>
+    </footer>
+  </div>
+
+  <script>
+    function enviar(comando) {
+      fetch(comando)
+        .then(() => console.log("Comando enviado:", comando))
+        .catch(() => alert("Erro ao enviar comando"));
+    }
+  </script>
+</body>
+</html>
