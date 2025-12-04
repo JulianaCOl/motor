@@ -1,54 +1,46 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tow Mater Battle Control</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tow Mater Controller</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
+  <div id="container">
 
-  <div class="painel">
+    <!-- LADO ESQUERDO – MOVIMENTO -->
+    <div class="coluna movimento">
+      <div class="btn-move" id="btnFrente">↑</div>
 
-    <header class="cabecalho">
-      <img src="https://i.imgur.com/zNZoSEe.png" class="mater-logo">
-      <h1>Tow Mater • Battle Mode</h1>
-      <p>Estoure o balão do inimigo!</p>
-    </header>
-
-    <div class="controle">
-
-      <button class="btn frente" onclick="cmd('/frente')">
-        🚗💨
-      </button>
-
-      <div class="linha">
-        <button class="btn esquerda" onclick="cmd('/esquerda')">↩</button>
-        <button class="btn parar" onclick="cmd('/parar')">⛔</button>
-        <button class="btn direita" onclick="cmd('/direita')">↪</button>
+      <div class="linha-meio">
+        <div class="btn-move" id="btnEsquerda">←</div>
+        <div class="btn-move centro" id="btnPare">■</div>
+        <div class="btn-move" id="btnDireita">→</div>
       </div>
 
-      <button class="btn re" onclick="cmd('/re')">
-        🔙
-      </button>
-
-      <button class="btn ataque" onclick="cmd('/ataque')">
-        💥 ATAQUE MATER 💥
-      </button>
+      <div class="btn-move" id="btnTras">↓</div>
     </div>
 
-    <footer>
-      <p>⚙️ Powered by ESP32 • Tow Mater Garage</p>
-    </footer>
+    <!-- LADO DIREITO – ATAQUES + DEFESAS -->
+    <div class="coluna ataque">
+
+      <button class="btn-ataque" id="atkFrontal1">Ataque Frontal 1</button>
+      <button class="btn-ataque" id="atkFrontal2">Ataque Frontal 2</button>
+
+      <button class="btn-ataque" id="atkTraseiro1">Ataque Traseiro 1</button>
+      <button class="btn-ataque" id="atkTraseiro2">Ataque Traseiro 2</button>
+
+      <!-- novos botões combo de defesa -->
+      <button class="btn-defesa-combo" id="defesaCombo1">Defesa Combo 1</button>
+      <button class="btn-defesa-combo" id="defesaCombo2">Defesa Combo 2</button>
+
+      <!-- botão do teto (defesa única) -->
+      <button class="btn-defesa" id="defesaTeto">Defesa (Teto)</button>
+    </div>
 
   </div>
 
-  <script>
-    function cmd(c) {
-      fetch(c);
-    }
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>
