@@ -1,46 +1,31 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Tow Mater Controller</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Tow Mater</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="container">
 
-    <!-- LADO ESQUERDO – MOVIMENTO -->
-    <div class="coluna movimento">
-      <div class="btn-move" id="btnFrente">↑</div>
+<div class="painel">
 
-      <div class="linha-meio">
-        <div class="btn-move" id="btnEsquerda">←</div>
-        <div class="btn-move centro" id="btnPare">■</div>
-        <div class="btn-move" id="btnDireita">→</div>
-      </div>
-
-      <div class="btn-move" id="btnTras">↓</div>
+    <div class="grupo-direcao">
+        <button class="btn circle seta" id="esquerda">←</button>
+        <button class="btn circle seta" id="frente">↑</button>
+        <button class="btn circle seta" id="direita">→</button>
+        <button class="btn circle seta" id="tras">↓</button>
     </div>
 
-    <!-- LADO DIREITO – ATAQUES + DEFESAS -->
-    <div class="coluna ataque">
-
-      <button class="btn-ataque" id="atkFrontal1">Ataque Frontal 1</button>
-      <button class="btn-ataque" id="atkFrontal2">Ataque Frontal 2</button>
-
-      <button class="btn-ataque" id="atkTraseiro1">Ataque Traseiro 1</button>
-      <button class="btn-ataque" id="atkTraseiro2">Ataque Traseiro 2</button>
-
-      <!-- novos botões combo de defesa -->
-      <button class="btn-defesa-combo" id="defesaCombo1">Defesa Combo 1</button>
-      <button class="btn-defesa-combo" id="defesaCombo2">Defesa Combo 2</button>
-
-      <!-- botão do teto (defesa única) -->
-      <button class="btn-defesa" id="defesaTeto">Defesa (Teto)</button>
+    <div class="grupo-ataque">
+        <button class="btn ataque">Ataque Frontal</button>
+        <button class="btn ataque">Ataque Traseiro</button>
+        <button class="btn ataque">Ataque Lateral</button>
+        <button class="btn ataque">Defesa</button>
     </div>
 
-  </div>
+</div>
 
-  <script src="script.js"></script>
+<script src="motion.js"></script>
 </body>
 </html>
