@@ -1,111 +1,173 @@
+#include <WiFi.h>
+#include <WebServer.h>
+
+
+const char* ssid = "TowMater_Control";
+const char* password = "12345678";
+
+WebServer server(80);
+
+
+const int motorIN1 = 26;
+const int motorIN2 = 27;
+const int motorIN3 = 32;
+const int motorIN4 = 33;
+
+#include <ESP32Servo.h>
+Servo servoFrontal;
+Servo servoTraseiro;
+Servo servoLateral;
+Servo servoDefesa;
+
+const int pinFrontal = 12;
+const int pinTraseiro = 13;
+const int pinLateral = 14;
+const int pinDefesa  = 15;
+
+
+void frente() {
+  digitalWrite(motorIN1, HIGH);
+  digitalWrite(motorIN2, LOW);
+  digitalWrite(motorIN3, HIGH);
+  digitalWrite(motorIN4, LOW);
+}
+
+void tras() {
+  digitalWrite(motorIN1, LOW);
+  digitalWrite(motorIN2, HIGH);
+  digitalWrite(motorIN3, LOW);
+  digitalWrite(motorIN4, HIGH);
+}
+
+void direita() {
+  digitalWrite(motorIN1, HIGH);
+  digitalWrite(motorIN2, LOW);
+  digitalWrite(motorIN3, LOW);
+  digitalWrite(motorIN4, HIGH);
+}
+
+void esquerda() {
+  digitalWrite(motorIN1, LOW);
+  digitalWrite(motorIN2, HIGH);
+  digitalWrite(motorIN3, HIGH);
+  digitalWrite(motorIN4, LOW);
+}
+
+void parar() {
+  digitalWrite(motorIN1, LOW);
+  digitalWrite(motorIN2, LOW);
+  digitalWrite(motorIN3, LOW);
+  digitalWrite(motorIN4, LOW);
+}
+
+
+void ataqueFrontal() {
+  servoFrontal.write(150);
+  delay(400);
+  servoFrontal.write(90);
+}
+
+void ataqueTraseiro() {
+  servoTraseiro.write(30);
+  delay(400);
+  servoTraseiro.write(90);
+}
+
+void ataqueLateral() {
+  servoLateral.write(150);
+  delay(400);
+  servoLateral.write(90);
+}
+
+void defesa() {
+  servoDefesa.write(150);
+  delay(500);
+  servoDefesa.write(90);
+}
+
+
 const char MAIN_page[] PROGMEM = R"=====(
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Tow Mater Control Panel</title>
-
-<style>
-body {
-    margin: 0;
-    padding: 0;
-    font-family: "Russo One", sans-serif;
-    background: url('https://i.imgur.com/8gsqK9V.jpeg');
-    background-size: cover;
-    background-position: center;
-    color: #fff;
-    text-align: center;
-}
-
-/* Painel enferrujado */
-.panel {
-    background: url('https://i.imgur.com/R3bw8CX.jpeg');
-    background-size: cover;
-    border: 6px solid #653B22;
-    border-radius: 20px;
-    width: 90%;
-    margin: auto;
-    padding: 20px;
-    margin-top: 20px;
-    box-shadow: 0px 0px 25px #000;
-}
-
-/* Logo Tow Mater */
-.logo {
-    width: 260px;
-    margin-bottom: 10px;
-    filter: drop-shadow(0px 0px 6px #000);
-}
-
-/* Botões metálicos */
-button {
-    width: 150px;
-    height: 70px;
-    margin: 12px;
-    font-size: 24px;
-    border-radius: 12px;
-    border: 3px solid #3b2a21;
-    background: linear-gradient(145deg, #5d4535, #3b2a21);
-    color: #fff;
-    text-shadow: 2px 2px 2px #000;
-    box-shadow: inset 2px 2px 4px #2d1e15, 2px 2px 6px #000;
-    transition: 0.2s;
-}
-
-button:active {
-    transform: scale(0.94);
-    box-shadow: inset 2px 2px 8px #000;
-}
-
-#direcao {
-    margin-top: 20px;
-}
-
-h1, h2 {
-    text-shadow: 3px 3px 2px #000;
-    color: #e0d6c2;
-}
-
-@media (max-width: 600px) {
-    button {
-        width: 42%;
-        height: 65px;
-        font-size: 22px;
-    }
-}
-</style>
-
+<title>Tow Mater</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<img class="logo" src="https://i.imgur.com/c0wM6rU.png">
-
-<div class="panel">
-
-<h1>Tow Mater Control Panel</h1>
-
-<div id="direcao">
-    <button onclick="send('frente')">⬆ Frente</button><br>
-    <button onclick="send('esquerda')">⬅ Esquerda</button>
-    <button onclick="send('parar')">⛔ Parar</button>
-    <button onclick="send('direita')">➡ Direita</button><br>
-    <button onclick="send('tras')">⬇ Trás</button>
-</div>
-
-<h2>Ataques</h2>
-<button onclick="send('ataque_frontal')">⚡ Frontal</button>
-button onclick="send('ataque_traseiro')">💥 Traseiro</button><br>
-<button onclick="send('defesa')">🛡 Defesa</button>
-<button onclick="send('combo')">🔥 Combo</button>
-
-</div>
+<h1>Tow Mater</h1>
 
 <script>
-function send(cmd) {
-    fetch('/' + cmd);
+function send(cmd){
+  fetch(cmd);
 }
 </script>
 
 </body>
 </html>
 )=====";
+
+
+void setupServer() {
+  
+  server.on("/", []() {
+    server.send(200, "text/html", MAIN_page);
+  });
+
+
+  server.on("/frente", []() { frente(); server.send(200, "text/plain", "ok"); });
+  server.on("/tras", []() { tras(); server.send(200, "text/plain", "ok"); });
+  server.on("/esquerda", []() { esquerda(); server.send(200, "text/plain", "ok"); });
+  server.on("/direita", []() { direita(); server.send(200, "text/plain", "ok"); });
+  server.on("/parar", []() { parar(); server.send(200, "text/plain", "ok"); });
+
+
+  server.on("/ataque_frontal", []() { ataqueFrontal(); server.send(200, "text/plain", "ok"); });
+  server.on("/ataque_traseiro", []() { ataqueTraseiro(); server.send(200, "text/plain", "ok"); });
+  server.on("/ataque_lateral", []() { ataqueLateral(); server.send(200, "text/plain", "ok"); });
+  server.on("/defesa", []() { defesa(); server.send(200, "text/plain", "ok"); });
+
+  server.begin();
+}
+
+
+void setup() {
+
+  Serial.begin(115200);
+
+ 
+  pinMode(motorIN1, OUTPUT);
+  pinMode(motorIN2, OUTPUT);
+  pinMode(motorIN3, OUTPUT);
+  pinMode(motorIN4, OUTPUT);
+
+  parar();
+
+
+  servoFrontal.attach(pinFrontal);
+  servoTraseiro.attach(pinTraseiro);
+  servoLateral.attach(pinLateral);
+  servoDefesa.attach(pinDefesa);
+
+  servoFrontal.write(90);
+  servoTraseiro.write(90);
+  servoLateral.write(90);
+  servoDefesa.write(90);
+
+
+  Serial.println("Iniciando Access Point...");
+  WiFi.softAP(ssid, password);
+
+  Serial.print("IP do AP: ");
+  Serial.println(WiFi.softAPIP());
+
+  
+  setupServer();
+}
+
+
+void loop() {
+  server.handleClient();
+}
